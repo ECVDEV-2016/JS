@@ -15,7 +15,7 @@ function Tekitizy (selector, options) {
   if (options && options.hasOwnProperty('transition')) {
 	    this.transition = options.transition
 	  } else {
-	    this.transition = 'slow'
+	    this.transition = 600
   }
   if (options && options.hasOwnProperty('autoPlay')) {
 	    this.autoplay = options.autoplay
@@ -151,11 +151,18 @@ Tekitizy.prototype.actionNext = function () {
 	}
 	nextElementSrc = nextElement.attr('data-src')
 	if(_this.effect){
-		jQuery('.tekitizy-carroussel-image').fadeOut(_this.transition, function(){
+		jQuery('.tekitizy-carroussel-image').css('position','relative')
+		jQuery('.tekitizy-carroussel-image').animate({right: jQuery(window).width()+'px'}, _this.transition, function(){
 			jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
 			jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+			jQuery('.tekitizy-carroussel-image').css('left',jQuery(window).width()+'px')
+			jQuery('.tekitizy-carroussel-image').css('right','initial')
+			jQuery('.tekitizy-carroussel-image').animate({left: '0px'}, _this.transition, function(){
+				jQuery('.tekitizy-carroussel-image').css('position','initial')
+				jQuery('.tekitizy-carroussel-image').css('right','initial')
+				jQuery('.tekitizy-carroussel-image').css('left','initial')
+			})
 		})
-		jQuery('.tekitizy-carroussel-image').fadeIn(_this.transition)
 	}
 	else{
 		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
@@ -176,11 +183,18 @@ Tekitizy.prototype.actionPrev = function () {
 	}
 	nextElementSrc = nextElement.attr('data-src')
 	if(_this.effect){
-		jQuery('.tekitizy-carroussel-image').fadeOut(_this.transition, function(){
+		jQuery('.tekitizy-carroussel-image').css('position','relative')
+		jQuery('.tekitizy-carroussel-image').animate({left: jQuery(window).width()+'px'}, _this.transition, function(){
 			jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
 			jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+			jQuery('.tekitizy-carroussel-image').css('right',jQuery(window).width()+'px')
+			jQuery('.tekitizy-carroussel-image').css('left','initial')
+			jQuery('.tekitizy-carroussel-image').animate({right: '0px'}, _this.transition, function(){
+				jQuery('.tekitizy-carroussel-image').css('position','initial')
+				jQuery('.tekitizy-carroussel-image').css('right','initial')
+				jQuery('.tekitizy-carroussel-image').css('left','initial')
+			})
 		})
-		jQuery('.tekitizy-carroussel-image').fadeIn(_this.transition)
 	}
 	else{
 		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
