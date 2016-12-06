@@ -108,8 +108,11 @@ Tekitizy.prototype.actionNext = function () {
 		nextElement = jQuery('.tekitizy-container').find('i[data-position=0]')
 	}
 	nextElementSrc = nextElement.attr('data-src')
-	jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
-	jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+	jQuery('.tekitizy-carroussel-image').fadeOut('slow', function(){
+		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
+		jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+	})
+	jQuery('.tekitizy-carroussel-image').fadeIn('slow')
 }
 
 Tekitizy.prototype.actionPrev = function () {
