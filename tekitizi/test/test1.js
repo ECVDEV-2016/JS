@@ -142,6 +142,7 @@ Tekitizy.prototype.actionPause = function () {
 Tekitizy.prototype.actionClose = function () {
   this.carroussel.removeClass('tekitizy-carroussel-open')
   jQuery(this.carroussel).remove('tekitizy-carroussel-window')
+  this.actionPause()
 }
 
 Tekitizy.prototype.rotate = function (tekitizi){
