@@ -6,8 +6,8 @@ function Tekitizy (selector, options) {
   } else {
     this.carroussel_id = 'tekitizy_carroussel'
   }
-  if (options && options.hasOwnProperty('speed')) {
-    this.speed = options.speed
+  if (options && options.hasOwnProperty('imageDuration')) {
+    this.speed = options.imageDuration*1000
   } else {
     this.speed = 5000
   }
@@ -16,11 +16,21 @@ function Tekitizy (selector, options) {
 	  } else {
 	    this.transition = 'slow'
   }
-  if (options && options.hasOwnProperty('autoplay')) {
+  if (options && options.hasOwnProperty('autoPlay')) {
 	    this.autoplay = options.autoplay
 	  } else {
 	    this.autoplay = true
   }
+  if (options && options.hasOwnProperty('prevNext')) {
+	    this.prevNext = options.prevNext
+	  } else {
+	    this.prevNext = 'true'
+  }
+  if (options && options.hasOwnProperty('play')) {
+	    this.play = options.play
+	  } else {
+	    this.play = 'true'
+}
   // this.selector <- selector (paramètre)
   // this.carrousel_id <- 'tekitizy_carroussel' ou options.carroussel_id
 }
@@ -75,15 +85,23 @@ Tekitizy.prototype.listenToButtons = function () {
 }
 
 Tekitizy.prototype.drawCarroussel = function (id) {
+  var _this = this
   var carroussel = ''
   carroussel += '<div class="tekitizy-carroussel" id=' + id + '></div>'
   // Ajouter les boutons, la figure ..
   this.carroussel = $(carroussel)
   this.carroussel.appendTo($('body'))
-  jQuery(this.carroussel).append('<div class="tekitizy-carroussel-window"><div class="tekitizy-carroussel-window-left"><button class="tekitizy-nav tekitizy-prev-btn"><i class="fa fa-angle-left"></i></button></div><div class="tekitizy-carroussel-window-center"><div class="tekitizy-window-inner"></div></div><div class="tekitizy-carroussel-window-right"><button class="tekitizy-close-btn"><i class="fa fa-close"></i></button><button class="tekitizy-nav tekitizy-next-btn"><i class="fa fa-angle-right"></i></button></div></div>')
+  jQuery(this.carroussel).append('<div class="tekitizy-carroussel-window"><div class="tekitizy-carroussel-window-left"></div><div class="tekitizy-carroussel-window-center"><div class="tekitizy-window-inner"></div></div><div class="tekitizy-carroussel-window-right"><button class="tekitizy-close-btn"><i class="fa fa-close"></i></button></div></div>')
   setTimeout(function() {
       jQuery('.tekitizy-window-inner').append('<img class="tekitizy-carroussel-image" src=""/>')
-      jQuery('.tekitizy-carroussel-window-center').append('<button class="tekitizy-play-btn"><i class="fa fa-play"></i></button><button class="tekitizy-pause-btn"><i class="fa fa-pause"></i></button>')
+      if(_this.prevNext){
+    	  jQuery('.tekitizy-carroussel-window-left').append('<button class="tekitizy-nav tekitizy-prev-btn"><i class="fa fa-angle-left"></i></button>')
+    	  jQuery('.tekitizy-carroussel-window-right').append('<button class="tekitizy-nav tekitizy-next-btn"><i class="fa fa-angle-right"></i></button>')
+      }
+      if(_this.play){
+    	  jQuery('.tekitizy-carroussel-window-center').append('<button class="tekitizy-play-btn"><i class="fa fa-play"></i></button>')
+    	  jQuery('.tekitizy-carroussel-window-center').append('<button class="tekitizy-pause-btn"><i class="fa fa-pause"></i></button>')
+      }
   }, 1)
 }
 
