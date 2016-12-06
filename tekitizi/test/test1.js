@@ -11,6 +11,16 @@ function Tekitizy (selector, options) {
   } else {
     this.speed = 5000
   }
+  if (options && options.hasOwnProperty('transition')) {
+	    this.transition = options.transition
+	  } else {
+	    this.transition = 'slow'
+  }
+  if (options && options.hasOwnProperty('autoplay')) {
+	    this.autoplay = options.autoplay
+	  } else {
+	    this.autoplay = true
+  }
   // this.selector <- selector (paramètre)
   // this.carrousel_id <- 'tekitizy_carroussel' ou options.carroussel_id
 }
@@ -30,6 +40,9 @@ Tekitizy.prototype.setup = function () {
   this.drawCarroussel(this.carroussel_id)
   this.appendZoomBtn(this.selector,this.clickZoomBtn)
   this.listenToButtons()
+  if(this.autoplay){
+	  this.actionPlay()
+  }
   // ...
 }
 
@@ -99,6 +112,7 @@ Tekitizy.prototype.actionShow = function (url) {
 }
 
 Tekitizy.prototype.actionNext = function () {
+	var _this = this
 	var currentPosition
 	currentPosition = jQuery('.tekitizy-carroussel-image').attr('data-position')
 	currentPosition = parseInt(currentPosition)+1
@@ -108,14 +122,15 @@ Tekitizy.prototype.actionNext = function () {
 		nextElement = jQuery('.tekitizy-container').find('i[data-position=0]')
 	}
 	nextElementSrc = nextElement.attr('data-src')
-	jQuery('.tekitizy-carroussel-image').fadeOut('slow', function(){
+	jQuery('.tekitizy-carroussel-image').fadeOut(_this.transition, function(){
 		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
 		jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
 	})
-	jQuery('.tekitizy-carroussel-image').fadeIn('slow')
+	jQuery('.tekitizy-carroussel-image').fadeIn(_this.transition)
 }
 
 Tekitizy.prototype.actionPrev = function () {
+	var _this = this
 	var currentPosition
 	currentPosition = jQuery('.tekitizy-carroussel-image').attr('data-position')
 	currentPosition = parseInt(currentPosition)-1
@@ -125,8 +140,11 @@ Tekitizy.prototype.actionPrev = function () {
 		nextElement = jQuery('.tekitizy-container').find('i[data-position=0]')
 	}
 	nextElementSrc = nextElement.attr('data-src')
-	jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
-	jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+	jQuery('.tekitizy-carroussel-image').fadeOut(_this.transition, function(){
+		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
+		jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+	})
+	jQuery('.tekitizy-carroussel-image').fadeIn(_this.transition)
 }
 
 Tekitizy.prototype.actionPlay = function () {
