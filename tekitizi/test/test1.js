@@ -1,6 +1,7 @@
 function Tekitizy (selector, options) {
   this.selector = selector
   this.position = 0
+  this.desc = ''
   if (options && options.hasOwnProperty('carroussel_id')) {
     this.carroussel_id = options.carroussel_id
   } else {
@@ -67,6 +68,7 @@ Tekitizy.prototype.listenToButtons = function () {
   setTimeout(function() {
   $('.tekitizy-open-btn').on('click',function () {
 	_this.position = jQuery(this).attr('data-position')
+	_this.desc = jQuery(this).attr('data-desc')
     _this.actionShow($(this).attr('data-src'))
   })
   jQuery('.tekitizy-close-btn').on('click',function () {
@@ -107,6 +109,7 @@ Tekitizy.prototype.drawCarroussel = function (id) {
     	  jQuery('.tekitizy-carroussel-window-center').append('<button class="tekitizy-play-btn"><i class="fa fa-play"></i></button>')
     	  jQuery('.tekitizy-carroussel-window-center').append('<button class="tekitizy-pause-btn"><i class="fa fa-pause"></i></button>')
       }
+      jQuery('.tekitizy-carroussel-window-center').append('<div class="tekitizy-img-desc"></div>')
   }, 1)
 }
 
@@ -119,10 +122,11 @@ Tekitizy.prototype.appendZoomBtn = function (selector) {
     var image_src
     $el = $(this)
     image_src = $el.attr('src')
+    image_alt = $el.attr('alt')
     $el.wrap('<div></div>') // image
       .parent() // container
         .addClass('tekitizy-container') // container
-        .append('<i class="tekitizy-open-btn fa fa-search" data-src="' + image_src + '" data-position="' + image_position + '" aria-hidden="true"></i>')
+        .append('<i class="tekitizy-open-btn fa fa-search" data-desc="' + image_alt + '" data-src="' + image_src + '" data-position="' + image_position + '" aria-hidden="true"></i>')
     image_position ++
   })
 }
@@ -131,6 +135,7 @@ Tekitizy.prototype.appendZoomBtn = function (selector) {
 Tekitizy.prototype.actionShow = function (url) {
   jQuery('.tekitizy-carroussel-image').attr('src',url);
   jQuery('.tekitizy-carroussel-image').attr('data-position', this.position)
+  jQuery('.tekitizy-img-desc').html('<p>' + this.desc + '</p>')
   this.carroussel.addClass('tekitizy-carroussel-open')
 }
 
@@ -156,6 +161,7 @@ Tekitizy.prototype.actionNext = function () {
 		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
 		jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
 	}
+	jQuery('.tekitizy-img-desc').html('<p>' + jQuery(nextElement).attr('data-desc') + '</p>')
 }
 
 Tekitizy.prototype.actionPrev = function () {
@@ -180,6 +186,7 @@ Tekitizy.prototype.actionPrev = function () {
 		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
 		jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
 	}
+	jQuery('.tekitizy-img-desc').html('<p>' + jQuery(nextElement).attr('data-desc') + '</p>')
 }
 
 Tekitizy.prototype.actionPlay = function () {
