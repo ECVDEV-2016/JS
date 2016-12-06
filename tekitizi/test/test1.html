@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Tekitizi: Test 1</title>
+  <script src="test1.js"></script>
+  <script src="../js/jquery-3.1.1.min.js"></script>
+  <link rel="stylesheet" href="../css/bootstrap.css" >
+  <link rel="stylesheet" href="../css/tekitizy.css" >
+  <link rel="stylesheet" href="../css/font-awesome-4.7.0/css/font-awesome.css">
+  <style>
+  body {
+    padding: 2em;
+  }
+  .post img {
+    max-width: 640px;
+    max-height: 480px;
+    clear: both;
+    border: thin solid #E0E0E0;
+    padding: 10px;
+    display: block;
+  }
+  p {
+    max-width: 40em;
+  }
+  img.logo {
+    float: right;
+    clear: right;
+    padding-left: 1em;
+    padding-bottom: 1em;
+    max-width: 100px;
+  }
+  </style>
+</head>
+
+<body>
+<p>
+  <img src="../images/lot-de-2-paires-de-mi-bas-ski-isol-tech-2-.jpg" class="logo" alt="Logo">
+</p>
+<div class="post">
+  <h1>Mon post!</h1>
+  <p>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+    <img src="../images/La-Linea-Roja-07.jpg" alt="La Linea 7">
+    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  </p>
+  <p>
+    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+    <img src="../images/La-Linea-Roja-11.jpg" alt="La Linea 11">
+    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  </p>
+  <p>
+    <a href="#" onclick="alert('bof!')">
+      <img src="../images/La-Linea-Roja-12.jpg" alt="La Linea 12">
+    </a>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+  </p>
+</div>
+<script>
+Tekitizy.setup('.post img')
+</script>
+</body>
+</html>

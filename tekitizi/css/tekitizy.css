@@ -1,0 +1,73 @@
+.tekitizy-carroussel {
+  position:fixed;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.9);
+  display: none;
+}
+
+.tekitizy-carroussel.tekitizy-carroussel-open {
+  display: block;
+}
+
+.tekitizy-carroussel-window{
+	position:fixed;
+	z-index:1;
+	display:flex;
+	flex-direction:row;
+	justify-content:space-between;
+	width:100%;
+	height:100%;
+}
+.tekitizy-window-inner{
+	background-color:white;
+	width:50vw;
+	height:80vh;
+}
+
+.tekitizy-carroussel-image{
+	width:100%;
+	height:auto;
+}
+
+.tekitizy-open-btn {
+  
+}
+
+.tekitizy-close-btn {
+
+}
+
+.tekitizy-nav {
+
+}
+.tekitizy-next-btn {
+
+}
+
+.tekitizy-prev-btn {
+
+}
+
+.tekitizy-play-btn {
+
+}
+
+.tekitizy-pause-btn {
+
+}
+
+.tekitity-image-container {
+
+}
+
+.tekitizy-image-content {
+
+}
+
+.tekitizy-imate-title {
+
+}
