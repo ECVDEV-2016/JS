@@ -6,6 +6,11 @@ function Tekitizy (selector, options) {
   } else {
     this.carroussel_id = 'tekitizy_carroussel'
   }
+  if (options && options.hasOwnProperty('speed')) {
+    this.speed = options.speed
+  } else {
+    this.speed = 5000
+  }
   // this.selector <- selector (paramètre)
   // this.carrousel_id <- 'tekitizy_carroussel' ou options.carroussel_id
 }
@@ -31,26 +36,33 @@ Tekitizy.prototype.setup = function () {
 Tekitizy.prototype.listenToButtons = function () {
   // this -> instance Tekitizy
   var _this = this
+  setTimeout(function() {
   $('.tekitizy-open-btn').on('click',function () {
-    // this -> noeud
-    // _this -> instance Tekitizy
 	_this.position = jQuery(this).attr('data-position')
     _this.actionShow($(this).attr('data-src'))
   })
   jQuery('.tekitizy-close-btn').on('click',function () {
 	_this.actionClose()  
   })
+  
+  jQuery('.tekitizy-play-btn').on('click', function() {
+	  _this.actionPlay()
+  })
+  jQuery('.tekitizy-pause-btn').on('click', function() {
+	  _this.actionPause()
+  })
+  
   jQuery('.tekitizy-next-btn').on('click', function() {
 	  _this.actionNext()
   })
   jQuery('.tekitizy-prev-btn').on('click', function() {
 	  _this.actionPrev()
   })
+  }, 1)
 }
 
 Tekitizy.prototype.drawCarroussel = function (id) {
   var carroussel = ''
-  var _this = this;
   carroussel += '<div class="tekitizy-carroussel" id=' + id + '></div>'
   // Ajouter les boutons, la figure ..
   this.carroussel = $(carroussel)
@@ -58,8 +70,8 @@ Tekitizy.prototype.drawCarroussel = function (id) {
   jQuery(this.carroussel).append('<div class="tekitizy-carroussel-window"><div class="tekitizy-carroussel-window-left"><button class="tekitizy-nav tekitizy-prev-btn"><i class="fa fa-angle-left"></i></button></div><div class="tekitizy-carroussel-window-center"><div class="tekitizy-window-inner"></div></div><div class="tekitizy-carroussel-window-right"><button class="tekitizy-close-btn"><i class="fa fa-close"></i></button><button class="tekitizy-nav tekitizy-next-btn"><i class="fa fa-angle-right"></i></button></div></div>')
   setTimeout(function() {
       jQuery('.tekitizy-window-inner').append('<img class="tekitizy-carroussel-image" src=""/>')
+      jQuery('.tekitizy-carroussel-window-center').append('<button class="tekitizy-play-btn"><i class="fa fa-play"></i></button><button class="tekitizy-pause-btn"><i class="fa fa-pause"></i></button>')
   }, 1)
-  
 }
 
 Tekitizy.prototype.appendZoomBtn = function (selector) {
@@ -115,16 +127,22 @@ Tekitizy.prototype.actionPrev = function () {
 }
 
 Tekitizy.prototype.actionPlay = function () {
-	jQuery('.tekitizy-window-inner img').attr('data-position')
+	_this = this
+	this.autoshow = setInterval(function(){_this.rotate(_this)}, _this.speed)
 }
 
 Tekitizy.prototype.actionPause = function () {
-
+	_this = this
+	clearInterval(_this.autoshow);
 }
 
 Tekitizy.prototype.actionClose = function () {
   this.carroussel.removeClass('tekitizy-carroussel-open')
   jQuery(this.carroussel).remove('tekitizy-carroussel-window')
+}
+
+Tekitizy.prototype.rotate = function (tekitizi){
+	jQuery('.tekitizy-next-btn').click()
 }
 
 // Tekitizy.setup('.post img',{ 'carroussel_id': 'my-tekitizy-carroussel' })
