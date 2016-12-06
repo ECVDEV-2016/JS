@@ -30,7 +30,12 @@ function Tekitizy (selector, options) {
 	    this.play = options.play
 	  } else {
 	    this.play = 'true'
-}
+  }
+  if (options && options.hasOwnProperty('effect')) {
+	    this.effect = options.effect
+	  } else {
+	    this.effect = 'true'
+  }
   // this.selector <- selector (paramètre)
   // this.carrousel_id <- 'tekitizy_carroussel' ou options.carroussel_id
 }
@@ -140,11 +145,17 @@ Tekitizy.prototype.actionNext = function () {
 		nextElement = jQuery('.tekitizy-container').find('i[data-position=0]')
 	}
 	nextElementSrc = nextElement.attr('data-src')
-	jQuery('.tekitizy-carroussel-image').fadeOut(_this.transition, function(){
+	if(_this.effect){
+		jQuery('.tekitizy-carroussel-image').fadeOut(_this.transition, function(){
+			jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
+			jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+		})
+		jQuery('.tekitizy-carroussel-image').fadeIn(_this.transition)
+	}
+	else{
 		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
 		jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
-	})
-	jQuery('.tekitizy-carroussel-image').fadeIn(_this.transition)
+	}
 }
 
 Tekitizy.prototype.actionPrev = function () {
@@ -158,11 +169,17 @@ Tekitizy.prototype.actionPrev = function () {
 		nextElement = jQuery('.tekitizy-container').find('i[data-position=0]')
 	}
 	nextElementSrc = nextElement.attr('data-src')
-	jQuery('.tekitizy-carroussel-image').fadeOut(_this.transition, function(){
+	if(_this.effect){
+		jQuery('.tekitizy-carroussel-image').fadeOut(_this.transition, function(){
+			jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
+			jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+		})
+		jQuery('.tekitizy-carroussel-image').fadeIn(_this.transition)
+	}
+	else{
 		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
 		jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
-	})
-	jQuery('.tekitizy-carroussel-image').fadeIn(_this.transition)
+	}
 }
 
 Tekitizy.prototype.actionPlay = function () {
