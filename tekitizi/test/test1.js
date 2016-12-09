@@ -1,6 +1,7 @@
-function Tekitizy (selector, options) {
+function Tekitizy (selector, jquery, options) {
   this.selector = selector
   this.position = 0
+  var $ = jquery;
   this.desc = ''
   if (options && options.hasOwnProperty('carroussel_id')) {
     this.carroussel_id = options.carroussel_id
@@ -67,25 +68,25 @@ Tekitizy.prototype.listenToButtons = function () {
   var _this = this
   setTimeout(function() {
   $('.tekitizy-open-btn').on('click',function () {
-	_this.position = jQuery(this).attr('data-position')
-	_this.desc = jQuery(this).attr('data-desc')
+	_this.position = $(this).attr('data-position')
+	_this.desc = $(this).attr('data-desc')
     _this.actionShow($(this).attr('data-src'))
   })
-  jQuery('.tekitizy-close-btn').on('click',function () {
+  $('.tekitizy-close-btn').on('click',function () {
 	_this.actionClose()  
   })
   
-  jQuery('.tekitizy-play-btn').on('click', function() {
+  $('.tekitizy-play-btn').on('click', function() {
 	  _this.actionPlay()
   })
-  jQuery('.tekitizy-pause-btn').on('click', function() {
+  $('.tekitizy-pause-btn').on('click', function() {
 	  _this.actionPause()
   })
   
-  jQuery('.tekitizy-next-btn').on('click', function() {
+  $('.tekitizy-next-btn').on('click', function() {
 	  _this.actionNext()
   })
-  jQuery('.tekitizy-prev-btn').on('click', function() {
+  $('.tekitizy-prev-btn').on('click', function() {
 	  _this.actionPrev()
   })
   }, 1)
@@ -98,18 +99,18 @@ Tekitizy.prototype.drawCarroussel = function (id) {
   // Ajouter les boutons, la figure ..
   this.carroussel = $(carroussel)
   this.carroussel.appendTo($('body'))
-  jQuery(this.carroussel).append('<div class="tekitizy-carroussel-window"><div class="tekitizy-carroussel-window-left"></div><div class="tekitizy-carroussel-window-center"><div class="tekitizy-window-inner"></div></div><div class="tekitizy-carroussel-window-right"><button class="tekitizy-close-btn"><i class="fa fa-close"></i></button></div></div>')
+  $(this.carroussel).append('<div class="tekitizy-carroussel-window"><div class="tekitizy-carroussel-window-left"></div><div class="tekitizy-carroussel-window-center"><div class="tekitizy-window-inner"></div></div><div class="tekitizy-carroussel-window-right"><button class="tekitizy-close-btn"><i class="fa fa-close"></i></button></div></div>')
   setTimeout(function() {
-      jQuery('.tekitizy-window-inner').append('<img class="tekitizy-carroussel-image" src=""/>')
+      $('.tekitizy-window-inner').append('<img class="tekitizy-carroussel-image" src=""/>')
       if(_this.prevNext){
-    	  jQuery('.tekitizy-carroussel-window-left').append('<button class="tekitizy-nav tekitizy-prev-btn"><i class="fa fa-angle-left"></i></button>')
-    	  jQuery('.tekitizy-carroussel-window-right').append('<button class="tekitizy-nav tekitizy-next-btn"><i class="fa fa-angle-right"></i></button>')
+    	  $('.tekitizy-carroussel-window-left').append('<button class="tekitizy-nav tekitizy-prev-btn"><i class="fa fa-angle-left"></i></button>')
+    	  $('.tekitizy-carroussel-window-right').append('<button class="tekitizy-nav tekitizy-next-btn"><i class="fa fa-angle-right"></i></button>')
       }
       if(_this.play){
-    	  jQuery('.tekitizy-carroussel-window-center').append('<button class="tekitizy-play-btn"><i class="fa fa-play"></i></button>')
-    	  jQuery('.tekitizy-carroussel-window-center').append('<button class="tekitizy-pause-btn"><i class="fa fa-pause"></i></button>')
+    	  $('.tekitizy-carroussel-window-center').append('<button class="tekitizy-play-btn"><i class="fa fa-play"></i></button>')
+    	  $('.tekitizy-carroussel-window-center').append('<button class="tekitizy-pause-btn"><i class="fa fa-pause"></i></button>')
       }
-      jQuery('.tekitizy-carroussel-window-center').append('<div class="tekitizy-img-desc"></div>')
+      $('.tekitizy-carroussel-window-center').append('<div class="tekitizy-img-desc"></div>')
   }, 1)
 }
 
@@ -133,74 +134,74 @@ Tekitizy.prototype.appendZoomBtn = function (selector) {
 
 // affiche une image
 Tekitizy.prototype.actionShow = function (url) {
-  jQuery('.tekitizy-carroussel-image').attr('src',url);
-  jQuery('.tekitizy-carroussel-image').attr('data-position', this.position)
-  jQuery('.tekitizy-img-desc').html('<p>' + this.desc + '</p>')
+  $('.tekitizy-carroussel-image').attr('src',url);
+  $('.tekitizy-carroussel-image').attr('data-position', this.position)
+  $('.tekitizy-img-desc').html('<p>' + this.desc + '</p>')
   this.carroussel.addClass('tekitizy-carroussel-open')
 }
 
 Tekitizy.prototype.actionNext = function () {
 	var _this = this
 	var currentPosition
-	currentPosition = jQuery('.tekitizy-carroussel-image').attr('data-position')
+	currentPosition = $('.tekitizy-carroussel-image').attr('data-position')
 	currentPosition = parseInt(currentPosition)+1
-	nextElement = jQuery('.tekitizy-container').find('i[data-position=' + currentPosition + ']')
+	nextElement = $('.tekitizy-container').find('i[data-position=' + currentPosition + ']')
 	if(nextElement.length == 0){
 		currentPosition = 0
-		nextElement = jQuery('.tekitizy-container').find('i[data-position=0]')
+		nextElement = $('.tekitizy-container').find('i[data-position=0]')
 	}
 	nextElementSrc = nextElement.attr('data-src')
 	if(_this.effect){
-		jQuery('.tekitizy-carroussel-image').css('position','relative')
-		jQuery('.tekitizy-carroussel-image').animate({right: jQuery(window).width()+'px'}, _this.transition, function(){
-			jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
-			jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
-			jQuery('.tekitizy-carroussel-image').css('left',jQuery(window).width()+'px')
-			jQuery('.tekitizy-carroussel-image').css('right','initial')
-			jQuery('.tekitizy-carroussel-image').animate({left: '0px'}, _this.transition, function(){
-				jQuery('.tekitizy-carroussel-image').css('position','initial')
-				jQuery('.tekitizy-carroussel-image').css('right','initial')
-				jQuery('.tekitizy-carroussel-image').css('left','initial')
+		$('.tekitizy-carroussel-image').css('position','relative')
+		$('.tekitizy-carroussel-image').animate({right: $(window).width()+'px'}, _this.transition, function(){
+			$('.tekitizy-carroussel-image').attr('src', nextElementSrc)
+			$('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+			$('.tekitizy-carroussel-image').css('left',$(window).width()+'px')
+			$('.tekitizy-carroussel-image').css('right','initial')
+			$('.tekitizy-carroussel-image').animate({left: '0px'}, _this.transition, function(){
+				$('.tekitizy-carroussel-image').css('position','initial')
+				$('.tekitizy-carroussel-image').css('right','initial')
+				$('.tekitizy-carroussel-image').css('left','initial')
 			})
 		})
 	}
 	else{
-		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
-		jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+		$('.tekitizy-carroussel-image').attr('src', nextElementSrc)
+		$('.tekitizy-carroussel-image').attr('data-position', currentPosition)
 	}
-	jQuery('.tekitizy-img-desc').html('<p>' + jQuery(nextElement).attr('data-desc') + '</p>')
+	$('.tekitizy-img-desc').html('<p>' + $(nextElement).attr('data-desc') + '</p>')
 }
 
 Tekitizy.prototype.actionPrev = function () {
 	var _this = this
 	var currentPosition
-	currentPosition = jQuery('.tekitizy-carroussel-image').attr('data-position')
+	currentPosition = $('.tekitizy-carroussel-image').attr('data-position')
 	currentPosition = parseInt(currentPosition)-1
-	nextElement = jQuery('.tekitizy-container').find('i[data-position=' + currentPosition + ']')
+	nextElement = $('.tekitizy-container').find('i[data-position=' + currentPosition + ']')
 	if(nextElement.length <= 0){
-		currentPosition = jQuery('.tekitizy-container i').length
-		nextElement = jQuery('.tekitizy-container').find('i[data-position=0]')
+		currentPosition = $('.tekitizy-container i').length
+		nextElement = $('.tekitizy-container').find('i[data-position=0]')
 	}
 	nextElementSrc = nextElement.attr('data-src')
 	if(_this.effect){
-		jQuery('.tekitizy-carroussel-image').css('position','relative')
-		jQuery('.tekitizy-carroussel-image').animate({left: jQuery(window).width()+'px'}, _this.transition, function(){
-			jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
-			jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
-			jQuery('.tekitizy-carroussel-image').css('right',jQuery(window).width()+'px')
-			jQuery('.tekitizy-carroussel-image').css('left','initial')
-			jQuery('.tekitizy-carroussel-image').animate({right: '0px'}, _this.transition, function(){
-				jQuery('.tekitizy-carroussel-image').css('position','initial')
-				jQuery('.tekitizy-carroussel-image').css('right','initial')
-				jQuery('.tekitizy-carroussel-image').css('left','initial')
+		$('.tekitizy-carroussel-image').css('position','relative')
+		$('.tekitizy-carroussel-image').animate({left: $(window).width()+'px'}, _this.transition, function(){
+			$('.tekitizy-carroussel-image').attr('src', nextElementSrc)
+			$('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+			$('.tekitizy-carroussel-image').css('right',$(window).width()+'px')
+			$('.tekitizy-carroussel-image').css('left','initial')
+			$('.tekitizy-carroussel-image').animate({right: '0px'}, _this.transition, function(){
+				$('.tekitizy-carroussel-image').css('position','initial')
+				$('.tekitizy-carroussel-image').css('right','initial')
+				$('.tekitizy-carroussel-image').css('left','initial')
 			})
 		})
 	}
 	else{
-		jQuery('.tekitizy-carroussel-image').attr('src', nextElementSrc)
-		jQuery('.tekitizy-carroussel-image').attr('data-position', currentPosition)
+		$('.tekitizy-carroussel-image').attr('src', nextElementSrc)
+		$('.tekitizy-carroussel-image').attr('data-position', currentPosition)
 	}
-	jQuery('.tekitizy-img-desc').html('<p>' + jQuery(nextElement).attr('data-desc') + '</p>')
+	$('.tekitizy-img-desc').html('<p>' + $(nextElement).attr('data-desc') + '</p>')
 }
 
 Tekitizy.prototype.actionPlay = function () {
@@ -215,12 +216,12 @@ Tekitizy.prototype.actionPause = function () {
 
 Tekitizy.prototype.actionClose = function () {
   this.carroussel.removeClass('tekitizy-carroussel-open')
-  jQuery(this.carroussel).remove('tekitizy-carroussel-window')
+  $(this.carroussel).remove('tekitizy-carroussel-window')
   this.actionPause()
 }
 
 Tekitizy.prototype.rotate = function (tekitizi){
-	jQuery('.tekitizy-next-btn').click()
+	$('.tekitizy-next-btn').click()
 }
 
 // Tekitizy.setup('.post img',{ 'carroussel_id': 'my-tekitizy-carroussel' })
