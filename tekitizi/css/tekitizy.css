@@ -1,3 +1,13 @@
+body {
+  position: relative;
+  width: 697px;
+  margin: 0 auto;
+}
+
+.tekitizy-container {
+  text-align: right;
+}
+
 .tekitizy-carroussel {
   position:fixed;
   width: 100%;
@@ -20,7 +30,7 @@
 	flex-direction:row;
 	justify-content:space-between;
 	width:100%;
-	height:100%;
+	height:80%;
 }
 .tekitizy-window-inner{
 	background-color:black;
@@ -36,22 +46,52 @@
 }
 
 .tekitizy-open-btn {
-  
+  position: relative;
+  right: -61px;
+  bottom: 415px;
+  color: white;
+  cursor: pointer;
+}
+
+.tekitizy-open-btn:hover {
+  color: #ed3434;
+}
+
+.tekitizy-carroussel-window-left, .tekitizy-carroussel-window-right {
+  transform: translateY(50%);
+}
+
+.tekitizy-carroussel-window-center {
+  margin-top: -666px;
+  transform: translateY(50%);
 }
 
 .tekitizy-close-btn {
-
+  color: white;
+  background-color: #ed3434;
+  border: none;
+  outline: none;
 }
 
 .tekitizy-nav {
 
 }
 .tekitizy-next-btn {
-
+  color: white;
+  background-color: #ed3434;
+  border: none;
+  outline: none;
 }
 
 .tekitizy-prev-btn {
+  color: white;
+  background-color: #ed3434;
+  border: none;
+  outline: none;
+}
 
+.tekitizy-prev-btn:hover, .tekitizy-next-btn:hover, .tekitizy-close-btn:hover {
+  color: black;
 }
 
 .tekitizy-play-btn {
